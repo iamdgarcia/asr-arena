@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASR Arena 🥊 — tiny ASR models, side by side</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>🥊 ASR Arena</h1>
+    <p class="tagline">Two tiny ASR models transcribe your mic side-by-side. Same runtime, same audio —
+    <strong>you</strong> judge speed vs accuracy.</p>
+  </header>
+
+  <section class="controls">
+    <button id="record-btn" disabled>⏳ Loading models…</button>
+    <span id="rec-hint">first run downloads both models (cached after)</span>
+  </section>
+
+  <section id="load-status" class="load-status" hidden>
+    <div class="load-row"><span class="load-name"></span><progress max="1" value="0"></progress><span class="load-pct"></span></div>
+    <div class="load-row"><span class="load-name"></span><progress max="1" value="0"></progress><span class="load-pct"></span></div>
+  </section>
+
+  <section id="timer" class="timer" hidden><span id="timer-val">0.0s</span> — recording… <span class="rec-dot"></span></section>
+
+  <section class="arena">
+    <article class="card" id="card-moonshine">
+      <h2>Moonshine Tiny <span class="size-note">~27M params</span></h2>
+      <p class="transcript" id="tr-moonshine">—</p>
+      <ul class="metrics" id="m-moonshine">
+        <li><b>latency</b> <span>—</span></li>
+        <li><b>words/sec</b> <span>—</span></li>
+        <li><b>WER</b> <span>—</span></li>
+      </ul>
+    </article>
+    <div class="vs">VS</div>
+    <article class="card" id="card-whisper">
+      <h2>Whisper Base.en <span class="size-note">~74M params</span></h2>
+      <p class="transcript" id="tr-whisper">—</p>
+      <ul class="metrics" id="m-whisper">
+        <li><b>latency</b> <span>—</span></li>
+        <li><b>words/sec</b> <span>—</span></li>
+        <li><b>WER</b> <span>—</span></li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="truth">
+    <label for="ground-truth"><b>Ground truth</b> — type what you said, get WER:</label>
+    <textarea id="ground-truth" rows="2" placeholder="e.g. the quick brown fox jumps over the lazy dog"></textarea>
+    <button id="score-btn" disabled>Score WER</button>
+  </section>
+
+  <section class="leaderboard">
+    <h2>🏆 Scoreboard <span class="muted">(wins by lower WER; tie → lower latency — saved locally)</span></h2>
+    <div class="score-row">
+      <span>Moonshine: <b id="wins-moonshine">0</b></span>
+      <span>Whisper: <b id="wins-whisper">0</b></span>
+      <button id="reset-btn" class="linklike">reset</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>100% in-browser (transformers.js, WASM q8). Audio never leaves your machine.
+    Built by <a href="https://huggingface.co/iamdgarcia">iamdgarcia</a> ·
+    <a href="https://github.com/iamdgarcia/asr-arena">code</a> ·
+    <a href="https://huggingface.co/onnx-community/moonshine-tiny-ONNX">moonshine-tiny</a> ·
+    <a href="https://huggingface.co/onnx-community/whisper-base.en">whisper-base.en</a></p>
+  </footer>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
